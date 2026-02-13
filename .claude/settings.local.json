@@ -3,7 +3,15 @@
     "allow": [
       "Bash(dir:*)",
       "Bash(\"C:\\\\Users\\\\skku0\\\\PycharmProjects\\\\PythonProject1\\\\.venv\\\\Scripts\\\\python.exe\":*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(python -c:*)",
+      "Bash(\"C:/Users/skku0/PycharmProjects/PythonProject1/.venv/Scripts/pip\" install streamlit openai Pillow requests pandas)",
+      "Bash(\"C:/Users/skku0/PycharmProjects/PythonProject1/.venv/Scripts/python.exe\" -m ensurepip:*)",
+      "Bash(\"C:/Users/skku0/PycharmProjects/PythonProject1/.venv/Scripts/python.exe\" -m pip install streamlit openai Pillow requests pandas)",
+      "Bash(ls:*)",
+      "Bash(wc:*)"
     ]
   }
 }
