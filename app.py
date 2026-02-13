@@ -951,17 +951,17 @@ def render_home_page():
         """
         <div class="preview-cards">
             <div class="preview-card">
-                <div class="card-icon">🎴</div>
+                <div class="card-icon">⚔️</div>
                 <div class="card-title">성향 카드</div>
                 <div class="card-desc">AI가 그린 초상화와 함께<br>나만의 게이머 성향 카드를 받아보세요</div>
             </div>
             <div class="preview-card">
-                <div class="card-icon">📊</div>
+                <div class="card-icon">🔮</div>
                 <div class="card-title">취향 분석</div>
                 <div class="card-desc">장르 선호도, 플레이 패턴,<br>숨겨진 취향까지 깊이 있는 분석</div>
             </div>
             <div class="preview-card">
-                <div class="card-icon">🎮</div>
+                <div class="card-icon">🎯</div>
                 <div class="card-title">추천 게임</div>
                 <div class="card-desc">분석된 취향을 바탕으로<br>딱 맞는 게임을 추천해드립니다</div>
             </div>
@@ -988,7 +988,7 @@ def render_card_page():
     data = st.session_state.analysis_data
     tier_color = _get_tier_color(personality.tier)
 
-    st.markdown('<div class="page-title">🎴 성향 카드</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">⚔️ 성향 카드</div>', unsafe_allow_html=True)
 
     col_img, col_info = st.columns([1, 1], gap="large")
 

@@ -15,7 +15,8 @@
       "Bash(git -C \"C:\\\\Users\\\\skku0\\\\PycharmProjects\\\\PythonProject1\" diff --stat)",
       "WebFetch(domain:github.com)",
       "Bash(where:*)",
-      "Bash(\"C:\\\\Users\\\\skku0\\\\PycharmProjects\\\\PythonProject1\\\\.venv\\\\Scripts\\\\python.exe\" -m pip install streamlit-option-menu)"
+      "Bash(\"C:\\\\Users\\\\skku0\\\\PycharmProjects\\\\PythonProject1\\\\.venv\\\\Scripts\\\\python.exe\" -m pip install streamlit-option-menu)",
+      "Bash(del:*)"
     ]
   }
 }
