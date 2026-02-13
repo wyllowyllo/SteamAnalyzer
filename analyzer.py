@@ -64,8 +64,8 @@ def analyze_gamer_profile(data: dict, api_key: str) -> GamerPersonality:
 - 한국어로 분석하되, gamer_type_english와 portrait_prompt는 영문으로 작성
 - 게이머 칭호(gamer_type)는 창의적이고 재미있게 (예: "밤을 지새우는 전략가", "인디의 숨은 보석 사냥꾼")
 - 숨겨진 취향은 장르 분포에서 의외의 패턴을 찾아 분석
-- portrait_prompt는 게이머 성향을 상징하는 판타지풍 초상화를 묘사 (인물 중심, 배경 단순, 게임 요소 포함)
-- portrait_prompt 형식: "A fantasy portrait of a [character description], [style details], digital art, dramatic lighting"
+- portrait_prompt는 게이머 성향을 상징하는 판타지 캐릭터 초상화를 묘사
+- portrait_prompt 형식: "Fantasy character portrait of a [gamer type], [personality visual traits], wearing a stylish casual outfit with subtle fantasy armor accents and glowing enchanted accessories, holding [game-related items], semi-realistic digital painting, warm cinematic lighting, dreamy bokeh background with floating magical particles, RPG character select screen aesthetic, shoulder-up composition"
 - one_line_summary는 반드시 20자 이내"""
 
     user_prompt = f"""다음 Steam 게이머 데이터를 분석해주세요.

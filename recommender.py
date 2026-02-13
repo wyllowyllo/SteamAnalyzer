@@ -1,7 +1,11 @@
 """GPT-4o 기반 맞춤 게임 추천 모듈"""
 
+import time
+
 from pydantic import BaseModel
 from openai import OpenAI
+
+from steam_api import search_steam_store
 
 
 class GameRecommendation(BaseModel):
@@ -9,6 +13,7 @@ class GameRecommendation(BaseModel):
     steam_url: str  # Steam 스토어 URL
     reason: str  # 추천 이유 (1-2문장, 한글)
     match_genre: str  # 매칭 장르
+    appid: int | None = None  # Steam 앱 ID
 
 
 class RecommendationList(BaseModel):
@@ -43,6 +48,7 @@ def get_recommendations(
 규칙:
 - 반드시 Steam에서 구매 가능한 실제 게임만 추천
 - steam_url은 "https://store.steampowered.com/app/앱ID/게임명/" 형식 (정확한 URL을 모르면 게임명 기반으로 구성)
+- appid는 Steam 앱 ID (정수). 반드시 정확한 앱 ID를 제공
 - 이미 보유한 게임은 절대 추천하지 않기
 - 추천 이유는 한국어로, 해당 게이머의 취향과 연결지어 설명
 - 다양한 장르에서 추천하되 선호 장르 비중을 높게
@@ -76,4 +82,17 @@ def get_recommendations(
         temperature=0.9,
     )
 
-    return response.choices[0].message.parsed
+    result = response.choices[0].message.parsed
+
+    # Steam 검색 API로 appid/URL 검증 및 보정 (검색 실패 시 제외)
+    verified = []
+    for rec in result.recommendations:
+        found = search_steam_store(rec.name)
+        if found:
+            rec.appid = found["appid"]
+            rec.steam_url = found["steam_url"]
+            verified.append(rec)
+            time.sleep(0.2)  # rate limit 방지
+
+    result.recommendations = verified
+    return result

@@ -127,6 +127,41 @@ def _draw_tier_badge(draw: ImageDraw.Draw, tier: str, x: int, y: int, colors: di
     )
 
 
+def create_portrait_image(
+    personality, portrait: Image.Image | None, tier: str
+) -> Image.Image:
+    """초상화 + 그라데이션 + 티어 뱃지만 포함된 이미지 (텍스트 없음).
+
+    Args:
+        personality: GamerPersonality 인스턴스
+        portrait: 초상화 이미지 (None이면 폴백 사용)
+        tier: S/A/B/C/D
+    """
+    colors = TIER_COLORS.get(tier, TIER_COLORS["B"])
+    bg_rgb = _hex_to_rgb(colors["bg"])
+
+    img = Image.new("RGB", (CARD_WIDTH, PORTRAIT_HEIGHT), bg_rgb)
+
+    if portrait is None:
+        portrait = generate_fallback_portrait(
+            personality.gamer_type_emoji, tier
+        )
+    img.paste(portrait, (0, 0))
+
+    # 하단 그라데이션 오버레이
+    for y in range(60):
+        alpha = int(255 * (y / 60))
+        overlay_y = PORTRAIT_HEIGHT - 60 + y
+        for x in range(CARD_WIDTH):
+            orig = img.getpixel((x, overlay_y))
+            r = int(orig[0] * (1 - alpha / 255) + bg_rgb[0] * (alpha / 255))
+            g = int(orig[1] * (1 - alpha / 255) + bg_rgb[1] * (alpha / 255))
+            b = int(orig[2] * (1 - alpha / 255) + bg_rgb[2] * (alpha / 255))
+            img.putpixel((x, overlay_y), (r, g, b))
+
+    return img
+
+
 def create_gamer_card(
     personality, data: dict, portrait: Image.Image | None, tier: str
 ) -> Image.Image:
@@ -168,12 +203,10 @@ def create_gamer_card(
     # 정보 영역 시작
     info_y = PORTRAIT_HEIGHT + 15
 
-    # 티어 뱃지 + 게이머 칭호
-    _draw_tier_badge(draw, tier, 24, info_y, colors)
-
+    # 게이머 칭호
     title_font = _load_font(26, bold=True)
     title_text = f"{personality.gamer_type} {personality.gamer_type_emoji}"
-    draw.text((84, info_y + 8), title_text, font=title_font, fill=text_rgb)
+    draw.text((36, info_y + 8), title_text, font=title_font, fill=text_rgb)
 
     # 구분선
     line_y = info_y + 62

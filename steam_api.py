@@ -175,6 +175,35 @@ def enrich_games_with_details(
     return enriched
 
 
+@st.cache_data(ttl=3600, show_spinner=False)
+def search_steam_store(game_name: str) -> dict | None:
+    """Steam Store 검색 API로 게임명을 검색하여 정확한 appid와 URL을 반환.
+
+    Returns:
+        {"appid": int, "name": str, "steam_url": str} 또는 None
+    """
+    try:
+        resp = requests.get(
+            "https://store.steampowered.com/api/storesearch/",
+            params={"term": game_name, "l": "korean", "cc": "KR"},
+            timeout=10,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        items = data.get("items", [])
+        if items:
+            top = items[0]
+            appid = top["id"]
+            return {
+                "appid": appid,
+                "name": top.get("name", game_name),
+                "steam_url": f"https://store.steampowered.com/app/{appid}/",
+            }
+    except Exception:
+        pass
+    return None
+
+
 def prepare_analysis_data(enriched_games: list[dict], all_games: list[dict]) -> dict:
     """LLM 입력용 데이터 가공."""
     total_playtime_hours = round(
