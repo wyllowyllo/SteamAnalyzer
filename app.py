@@ -32,19 +32,22 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─── CSS 스타일 (다크 게이밍 테마) ─────────────────────────
+# ─── CSS 스타일 (판타지 다크 테마 — Red & Gold) ─────────────
 CSS_STYLES = """
 <style>
 /* ── Google Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 /* ── 전역 ── */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
-    color: #e6e6e6;
+    color: #3d2e22;
 }
 .stApp {
-    background-color: #0e1117;
+    background: #faf7f4;
+    background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 148, 58, 0.06), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(153, 27, 27, 0.03), transparent);
 }
 
 /* Streamlit 기본 헤더/푸터 숨김 */
@@ -54,8 +57,8 @@ footer { display: none !important; }
 
 /* ── 사이드바 ── */
 section[data-testid="stSidebar"] {
-    background-color: #0d1117;
-    border-right: 1px solid #2d3548;
+    background: linear-gradient(180deg, #1a0f0a 0%, #201410 50%, #1a0f0a 100%);
+    border-right: 1px solid rgba(180, 130, 55, 0.15);
     min-width: 280px;
     max-width: 280px;
 }
@@ -66,87 +69,250 @@ section[data-testid="stSidebar"] .block-container {
 /* ── 사이드바 브랜드 ── */
 .sidebar-brand {
     text-align: center;
-    padding: 0.5rem 0 1rem 0;
-    border-bottom: 1px solid #2d3548;
+    padding: 0.8rem 0 1.2rem 0;
+    border-bottom: 1px solid rgba(180, 130, 55, 0.15);
     margin-bottom: 1rem;
+    position: relative;
+}
+.sidebar-brand::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 15%;
+    width: 70%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245, 197, 66, 0.6), rgba(180, 130, 55, 0.4), transparent);
 }
 .sidebar-brand h2 {
-    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+    font-family: 'Cinzel', serif;
+    background: linear-gradient(135deg, #f5c542, #e8a825, #d4943a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 800;
     margin: 0;
-    letter-spacing: -0.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 .sidebar-brand p {
-    color: #8b95a5;
-    font-size: 0.75rem;
-    margin: 0.2rem 0 0 0;
+    color: #6b5545;
+    font-size: 0.7rem;
+    margin: 0.35rem 0 0 0;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
 }
 
 /* ── 사이드바 분석 상태 ── */
 .sidebar-status {
-    background: #21273a;
-    border: 1px solid #2d3548;
-    border-radius: 12px;
-    padding: 1rem;
+    background: rgba(26, 15, 10, 0.85);
+    border: 1px solid rgba(180, 130, 55, 0.15);
+    border-radius: 16px;
+    padding: 1.2rem;
     margin-top: 1.5rem;
     text-align: center;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+.sidebar-status::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #991b1b, #d4943a, #f5c542);
 }
 .sidebar-status .status-emoji {
     font-size: 2rem;
 }
 .sidebar-status .status-type {
-    color: #e6e6e6;
+    color: #f0e6d6;
     font-weight: 700;
     font-size: 0.95rem;
     margin-top: 0.3rem;
 }
 .sidebar-status .status-tier {
     display: inline-block;
-    padding: 2px 12px;
+    padding: 3px 14px;
     border-radius: 20px;
     font-weight: 700;
     font-size: 0.8rem;
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 /* ── 히어로 섹션 ── */
 .hero-section {
     text-align: center;
-    padding: 3rem 0 2rem 0;
+    padding: 2rem 0 2rem 0;
+    position: relative;
 }
 .hero-title {
+    font-family: 'Cinzel', serif;
     font-size: 2.8rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+    background: linear-gradient(135deg, #b8860b 0%, #d4943a 30%, #991b1b 60%, #d4943a 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 5s ease infinite;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     line-height: 1.2;
+    letter-spacing: 1px;
 }
 .hero-subtitle {
-    color: #8b95a5;
-    font-size: 1.1rem;
-    max-width: 600px;
+    color: #8c7a6a;
+    font-size: 1.05rem;
+    max-width: 560px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.8;
 }
+.hero-subtitle b {
+    color: #5c3a1e;
+    font-weight: 700;
+}
+
+/* ── 히어로 동적 배경 ── */
+.hero-bg {
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 0 1rem 0;
+}
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle 300px at 20% 30%, rgba(212, 148, 58, 0.08), transparent),
+        radial-gradient(circle 250px at 80% 60%, rgba(153, 27, 27, 0.05), transparent),
+        radial-gradient(circle 200px at 50% 80%, rgba(245, 197, 66, 0.04), transparent);
+    animation: bgFloat 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* 떠다니는 오브 */
+.floating-orbs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.35;
+    animation: orbFloat 15s ease-in-out infinite;
+}
+.orb-1 {
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(212, 148, 58, 0.25), transparent 70%);
+    top: 10%;
+    left: 15%;
+    animation-duration: 18s;
+    animation-delay: 0s;
+}
+.orb-2 {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(245, 197, 66, 0.2), transparent 70%);
+    top: 60%;
+    right: 20%;
+    animation-duration: 14s;
+    animation-delay: -4s;
+}
+.orb-3 {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(153, 27, 27, 0.12), transparent 70%);
+    bottom: 20%;
+    left: 60%;
+    animation-duration: 22s;
+    animation-delay: -8s;
+}
+.orb-4 {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(180, 130, 55, 0.2), transparent 70%);
+    top: 30%;
+    right: 10%;
+    animation-duration: 16s;
+    animation-delay: -2s;
+}
+
+/* 파티클 효과 (금빛 먼지) */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(212, 148, 58, 0.5);
+    animation: particleRise linear infinite;
+}
+.particle:nth-child(1) { left: 10%; animation-duration: 12s; animation-delay: 0s; width: 2px; height: 2px; }
+.particle:nth-child(2) { left: 25%; animation-duration: 16s; animation-delay: -3s; width: 3px; height: 3px; background: rgba(184, 134, 11, 0.45); }
+.particle:nth-child(3) { left: 40%; animation-duration: 10s; animation-delay: -6s; width: 2px; height: 2px; background: rgba(212, 148, 58, 0.35); }
+.particle:nth-child(4) { left: 55%; animation-duration: 18s; animation-delay: -1s; width: 4px; height: 4px; background: rgba(153, 27, 27, 0.2); }
+.particle:nth-child(5) { left: 70%; animation-duration: 14s; animation-delay: -5s; width: 2px; height: 2px; background: rgba(245, 197, 66, 0.3); }
+.particle:nth-child(6) { left: 85%; animation-duration: 20s; animation-delay: -8s; width: 3px; height: 3px; background: rgba(180, 130, 55, 0.35); }
+.particle:nth-child(7) { left: 35%; animation-duration: 11s; animation-delay: -2s; width: 2px; height: 2px; background: rgba(184, 134, 11, 0.3); }
+.particle:nth-child(8) { left: 65%; animation-duration: 15s; animation-delay: -7s; width: 3px; height: 3px; }
+
+/* 장식 라인 */
+.hero-divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4943a, #b8860b, #d4943a, transparent);
+    border-radius: 2px;
+    margin: 1.5rem auto 0 auto;
+    animation: dividerPulse 3s ease-in-out infinite;
+    position: relative;
+}
+.hero-divider::before,
+.hero-divider::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d4943a;
+    box-shadow: 0 0 8px rgba(212, 148, 58, 0.6);
+}
+.hero-divider::before { left: -3px; }
+.hero-divider::after { right: -3px; }
 
 /* ── 카드 컴포넌트 ── */
 .g-card {
-    background: #21273a;
-    border: 1px solid #2d3548;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(212, 148, 58, 0.15);
     border-radius: 16px;
     padding: 1.5rem;
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.5s ease-out;
+    backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.6s ease-out;
 }
 .g-card:hover {
-    border-color: #6c5ce7;
-    box-shadow: 0 0 20px rgba(108, 92, 231, 0.15);
-    transform: translateY(-2px);
+    border-color: rgba(212, 148, 58, 0.35);
+    box-shadow: 0 8px 32px rgba(180, 130, 55, 0.1), 0 0 0 1px rgba(212, 148, 58, 0.08);
+    transform: translateY(-3px);
 }
 
 /* ── 미리보기 카드 (홈) ── */
@@ -154,61 +320,94 @@ section[data-testid="stSidebar"] .block-container {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     flex-wrap: wrap;
+    padding: 0 1rem;
 }
 .preview-card {
-    background: #21273a;
-    border: 1px solid #2d3548;
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(212, 148, 58, 0.12);
+    border-radius: 20px;
+    padding: 2.2rem 1.8rem;
     text-align: center;
     flex: 1;
-    min-width: 200px;
-    max-width: 280px;
-    transition: all 0.3s ease;
+    min-width: 220px;
+    max-width: 300px;
+    backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.preview-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(212, 148, 58, 0.6), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.preview-card:hover::before {
+    opacity: 1;
 }
 .preview-card:hover {
-    border-color: #6c5ce7;
-    box-shadow: 0 0 20px rgba(108, 92, 231, 0.15);
-    transform: translateY(-2px);
+    border-color: rgba(212, 148, 58, 0.3);
+    box-shadow: 0 12px 40px rgba(180, 130, 55, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.9);
 }
 .preview-card .card-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.8rem;
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(180, 130, 55, 0.2));
 }
 .preview-card .card-title {
-    color: #e6e6e6;
+    font-family: 'Cinzel', serif;
+    color: #3d2e22;
     font-weight: 700;
     font-size: 1.1rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.5px;
 }
 .preview-card .card-desc {
-    color: #8b95a5;
+    color: #8c7a6a;
     font-size: 0.85rem;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 /* ── 스탯 박스 ── */
 .stat-box {
-    background: #21273a;
-    border: 1px solid #2d3548;
-    border-left: 4px solid #6c5ce7;
-    border-radius: 12px;
-    padding: 1.2rem 1rem;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(212, 148, 58, 0.12);
+    border-left: 3px solid #d4943a;
+    border-radius: 14px;
+    padding: 1.3rem 1rem;
     text-align: center;
-    animation: fadeInUp 0.5s ease-out;
+    backdrop-filter: blur(12px);
+    animation: fadeInUp 0.6s ease-out;
+    transition: all 0.3s ease;
+}
+.stat-box:hover {
+    border-color: rgba(212, 148, 58, 0.3);
+    box-shadow: 0 4px 20px rgba(180, 130, 55, 0.1);
 }
 .stat-box .stat-value {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Cinzel', serif;
     font-size: 1.6rem;
     font-weight: 700;
-    color: #e6e6e6;
+    background: linear-gradient(135deg, #b8860b, #991b1b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .stat-box .stat-label {
-    color: #8b95a5;
-    font-size: 0.8rem;
-    margin-top: 0.2rem;
+    color: #8c7a6a;
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* ── 티어 배지 ── */
@@ -216,125 +415,164 @@ section[data-testid="stSidebar"] .block-container {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Cinzel', serif;
     font-size: 1.5rem;
     font-weight: 800;
     color: #fff;
-    animation: glowPulse 2s ease-in-out infinite;
+    animation: glowPulse 2.5s ease-in-out infinite;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(245, 197, 66, 0.4);
 }
 
 /* ── 장르 필 ── */
 .genre-pill {
     display: inline-block;
-    background: rgba(108, 92, 231, 0.2);
-    border: 1px solid rgba(108, 92, 231, 0.4);
-    color: #a29bfe;
-    padding: 0.3rem 0.9rem;
+    background: rgba(153, 27, 27, 0.06);
+    border: 1px solid rgba(153, 27, 27, 0.15);
+    color: #991b1b;
+    padding: 0.35rem 1rem;
     border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
+    font-size: 0.83rem;
+    font-weight: 600;
     margin: 0.2rem;
+    transition: all 0.3s ease;
+}
+.genre-pill:hover {
+    background: rgba(153, 27, 27, 0.1);
+    border-color: rgba(153, 27, 27, 0.25);
+    box-shadow: 0 2px 12px rgba(153, 27, 27, 0.1);
 }
 
 /* ── 게임 추천 카드 ── */
 .game-card {
-    background: #21273a;
-    border: 1px solid #2d3548;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(212, 148, 58, 0.12);
     border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.5s ease-out;
+    backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.6s ease-out;
     height: 100%;
 }
 .game-card:hover {
-    border-color: #6c5ce7;
-    box-shadow: 0 0 20px rgba(108, 92, 231, 0.15);
-    transform: translateY(-2px);
+    border-color: rgba(212, 148, 58, 0.3);
+    box-shadow: 0 12px 40px rgba(180, 130, 55, 0.1);
+    transform: translateY(-4px);
 }
 .game-card-body {
-    padding: 1rem 1.2rem 1.2rem 1.2rem;
+    padding: 1.1rem 1.3rem 1.3rem 1.3rem;
 }
 .game-card-body .game-name {
-    color: #e6e6e6;
+    color: #3d2e22;
     font-weight: 700;
     font-size: 1.05rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
 }
 .game-card-body .game-genre {
-    color: #8b95a5;
+    color: #8c7a6a;
     font-size: 0.8rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
 }
 .game-card-body .game-reason {
-    color: #b0b8c8;
+    color: #5c4a3a;
     font-size: 0.88rem;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 /* ── 분석 텍스트 카드 ── */
 .analysis-card {
-    background: #21273a;
-    border: 1px solid #2d3548;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(212, 148, 58, 0.12);
     border-radius: 16px;
-    padding: 1.5rem;
-    animation: fadeInUp 0.5s ease-out;
+    padding: 1.8rem;
+    backdrop-filter: blur(12px);
+    animation: fadeInUp 0.6s ease-out;
     height: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.analysis-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #991b1b, #d4943a, #b8860b);
+    opacity: 0.6;
+}
+.analysis-card:hover {
+    border-color: rgba(212, 148, 58, 0.25);
+    box-shadow: 0 8px 30px rgba(180, 130, 55, 0.1);
 }
 .analysis-card h4 {
-    color: #e6e6e6;
+    color: #3d2e22;
     font-weight: 700;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
 }
 .analysis-card p {
-    color: #b0b8c8;
-    line-height: 1.7;
+    color: #5c4a3a;
+    line-height: 1.8;
     font-size: 0.95rem;
 }
 
 /* ── 정보 페이지 스텝 ── */
 .info-step {
-    background: #21273a;
-    border: 1px solid #2d3548;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(212, 148, 58, 0.12);
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 1.8rem 1.5rem;
     text-align: center;
-    animation: fadeInUp 0.5s ease-out;
+    backdrop-filter: blur(12px);
+    animation: fadeInUp 0.6s ease-out;
+    transition: all 0.3s ease;
+}
+.info-step:hover {
+    border-color: rgba(212, 148, 58, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(180, 130, 55, 0.1);
 }
 .info-step .step-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6c5ce7, #00cec9);
-    color: #fff;
+    background: linear-gradient(135deg, #991b1b, #dc2626);
+    color: #f5c542;
+    font-family: 'Cinzel', serif;
     font-weight: 800;
     font-size: 1.1rem;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.9rem;
+    box-shadow: 0 4px 15px rgba(153, 27, 27, 0.25);
+    border: 1px solid rgba(245, 197, 66, 0.25);
 }
 .info-step .step-title {
-    color: #e6e6e6;
+    color: #3d2e22;
     font-weight: 700;
     font-size: 1rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
 }
 .info-step .step-desc {
-    color: #8b95a5;
+    color: #8c7a6a;
     font-size: 0.85rem;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 /* ── 인용 박스 ── */
 .quote-box {
-    background: rgba(108, 92, 231, 0.08);
-    border-left: 4px solid #6c5ce7;
-    border-radius: 0 12px 12px 0;
-    padding: 1rem 1.2rem;
-    color: #a29bfe;
+    background: rgba(153, 27, 27, 0.04);
+    border-left: 3px solid;
+    border-image: linear-gradient(180deg, #991b1b, #d4943a, #b8860b) 1;
+    border-radius: 0 14px 14px 0;
+    padding: 1.1rem 1.4rem;
+    color: #991b1b;
     font-size: 1.05rem;
     font-weight: 600;
     font-style: italic;
@@ -343,15 +581,17 @@ section[data-testid="stSidebar"] .block-container {
 
 /* ── 페이지 타이틀 ── */
 .page-title {
+    font-family: 'Cinzel', serif;
     font-size: 1.8rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+    background: linear-gradient(135deg, #b8860b, #991b1b, #d4943a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.3rem;
+    letter-spacing: 0.5px;
 }
 .page-subtitle {
-    color: #8b95a5;
+    color: #8c7a6a;
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
 }
@@ -359,18 +599,22 @@ section[data-testid="stSidebar"] .block-container {
 /* ── 버튼 커스텀 ── */
 div.stButton > button[kind="primary"],
 div.stDownloadButton > button {
-    background: linear-gradient(135deg, #6c5ce7, #00cec9) !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 12px !important;
+    background: linear-gradient(135deg, #991b1b, #b91c1c, #dc2626) !important;
+    color: #f5c542 !important;
+    border: 1px solid rgba(245, 197, 66, 0.25) !important;
+    border-radius: 14px !important;
     font-weight: 700 !important;
-    padding: 0.6rem 1.5rem !important;
-    transition: all 0.3s ease !important;
+    padding: 0.7rem 1.8rem !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 15px rgba(153, 27, 27, 0.2) !important;
+    letter-spacing: 0.5px !important;
 }
 div.stButton > button[kind="primary"]:hover,
 div.stDownloadButton > button:hover {
-    filter: brightness(1.15) !important;
-    box-shadow: 0 0 20px rgba(108, 92, 231, 0.3) !important;
+    filter: brightness(1.1) !important;
+    box-shadow: 0 8px 30px rgba(153, 27, 27, 0.3) !important;
+    transform: translateY(-1px) !important;
+    border-color: rgba(245, 197, 66, 0.4) !important;
 }
 
 /* ── Altair 차트 투명 배경 ── */
@@ -378,14 +622,14 @@ div.stDownloadButton > button:hover {
     background: transparent !important;
 }
 .vega-embed .vega-bind-name {
-    color: #8b95a5 !important;
+    color: #8c7a6a !important;
 }
 
 /* ── 애니메이션 ── */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -393,24 +637,64 @@ div.stDownloadButton > button:hover {
     }
 }
 @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 8px rgba(108, 92, 231, 0.4); }
-    50% { box-shadow: 0 0 20px rgba(108, 92, 231, 0.7); }
+    0%, 100% { box-shadow: 0 0 10px rgba(153, 27, 27, 0.2), 0 0 4px rgba(212, 148, 58, 0.15), 0 4px 15px rgba(0, 0, 0, 0.1); }
+    50% { box-shadow: 0 0 20px rgba(153, 27, 27, 0.3), 0 0 8px rgba(212, 148, 58, 0.25), 0 4px 15px rgba(0, 0, 0, 0.1); }
+}
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes bgFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(2%, -1%) rotate(1deg); }
+    66% { transform: translate(-1%, 2%) rotate(-1deg); }
+}
+@keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(15px, -20px) scale(1.1); }
+    50% { transform: translate(-10px, 15px) scale(0.95); }
+    75% { transform: translate(20px, 10px) scale(1.05); }
+}
+@keyframes particleRise {
+    0% {
+        transform: translateY(100%) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+        transform: translateY(80%) translateX(5px) scale(1);
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100%) translateX(-10px) scale(0.3);
+        opacity: 0;
+    }
+}
+@keyframes dividerPulse {
+    0%, 100% { opacity: 0.5; width: 80px; }
+    50% { opacity: 1; width: 120px; }
 }
 
 /* ── option-menu 오버라이드 ── */
 div[data-testid="stSidebar"] .nav-link {
-    color: #8b95a5 !important;
-    border-radius: 10px !important;
-    margin: 2px 0 !important;
+    color: #6b5545 !important;
+    border-radius: 12px !important;
+    margin: 3px 0 !important;
+    transition: all 0.3s ease !important;
 }
 div[data-testid="stSidebar"] .nav-link:hover {
-    color: #e6e6e6 !important;
-    background-color: rgba(108, 92, 231, 0.1) !important;
+    color: #f0e6d6 !important;
+    background-color: rgba(153, 27, 27, 0.1) !important;
 }
 div[data-testid="stSidebar"] .nav-link-selected {
-    background: linear-gradient(135deg, #6c5ce7, #00cec9) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, #991b1b, #b91c1c) !important;
+    color: #f5c542 !important;
     font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(153, 27, 27, 0.3) !important;
+    border: 1px solid rgba(245, 197, 66, 0.15) !important;
 }
 
 /* ── 메인 영역 패딩 ── */
@@ -421,36 +705,63 @@ div[data-testid="stSidebar"] .nav-link-selected {
 
 /* ── link_button 스타일 ── */
 div.stLinkButton > a {
-    background: linear-gradient(135deg, #6c5ce7, #00cec9) !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 10px !important;
+    background: linear-gradient(135deg, #991b1b, #b91c1c) !important;
+    color: #f5c542 !important;
+    border: 1px solid rgba(245, 197, 66, 0.2) !important;
+    border-radius: 12px !important;
     font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(153, 27, 27, 0.15) !important;
+    transition: all 0.3s ease !important;
 }
 div.stLinkButton > a:hover {
-    filter: brightness(1.15) !important;
+    filter: brightness(1.1) !important;
+    box-shadow: 0 6px 25px rgba(153, 27, 27, 0.25) !important;
 }
 
-/* ── text_input 다크 테마 ── */
+/* ── text_input 테마 ── */
 div[data-testid="stTextInput"] input {
-    background-color: #21273a !important;
-    color: #e6e6e6 !important;
-    border: 1px solid #2d3548 !important;
-    border-radius: 10px !important;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    color: #3d2e22 !important;
+    border: 1px solid rgba(212, 148, 58, 0.2) !important;
+    border-radius: 14px !important;
+    padding: 0.7rem 1rem !important;
+    backdrop-filter: blur(12px) !important;
+    transition: all 0.3s ease !important;
 }
 div[data-testid="stTextInput"] input:focus {
-    border-color: #6c5ce7 !important;
-    box-shadow: 0 0 0 1px #6c5ce7 !important;
+    border-color: rgba(212, 148, 58, 0.5) !important;
+    box-shadow: 0 0 0 2px rgba(212, 148, 58, 0.1), 0 4px 20px rgba(180, 130, 55, 0.08) !important;
+}
+div[data-testid="stTextInput"] input::placeholder {
+    color: #bfaa96 !important;
 }
 
 /* ── 크레딧 ── */
 .credits {
     text-align: center;
-    color: #8b95a5;
+    color: #a89585;
     font-size: 0.8rem;
     margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #2d3548;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(212, 148, 58, 0.12);
+}
+.credits b {
+    color: #8c7a6a;
+}
+
+/* ── 스크롤바 커스텀 ── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f5f0eb;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(212, 148, 58, 0.25);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 148, 58, 0.45);
 }
 </style>
 """
@@ -578,14 +889,33 @@ def _show_game_image(appid: int | None):
 
 def render_home_page():
     """홈 페이지: 히어로 + 입력 + 분석 트리거."""
-    # 히어로 섹션
+    # 히어로 섹션 (동적 배경 포함)
     st.markdown(
         """
-        <div class="hero-section">
-            <div class="hero-title">Steam 게이머 성향 분석기</div>
-            <div class="hero-subtitle">
-                Steam 프로필 URL을 입력하면 게임 라이브러리를 분석하여<br>
-                <b>게이머 성향 카드</b>, <b>취향 분석 리포트</b>, <b>맞춤 게임 추천</b>을 제공합니다.
+        <div class="hero-bg">
+            <div class="floating-orbs">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+                <div class="orb orb-4"></div>
+            </div>
+            <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="hero-section">
+                <div class="hero-title">Steam 게이머 성향 분석기</div>
+                <div class="hero-subtitle">
+                    Steam 프로필 URL을 입력하면 게임 라이브러리를 분석하여<br>
+                    <b>게이머 성향 카드</b>, <b>취향 분석 리포트</b>, <b>맞춤 게임 추천</b>을 제공합니다.
+                </div>
+                <div class="hero-divider"></div>
             </div>
         </div>
         """,
@@ -814,9 +1144,9 @@ def render_analysis_page():
             .properties(height=max(len(genre_df) * 32, 200))
             .configure_view(strokeWidth=0)
             .configure_axis(
-                labelColor="#8b95a5",
-                titleColor="#8b95a5",
-                gridColor="#2d3548",
+                labelColor="#8c7a6a",
+                titleColor="#8c7a6a",
+                gridColor="rgba(212, 148, 58, 0.1)",
             )
         )
         st.altair_chart(chart, use_container_width=True)
@@ -938,8 +1268,8 @@ with st.sidebar:
     st.markdown(
         """
         <div class="sidebar-brand">
-            <h2>🎮 STEAM ANALYZER</h2>
-            <p>게이머 성향 분석기</p>
+            <h2>STEAM ANALYZER</h2>
+            <p>GAMER PROFILE ENGINE</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -965,16 +1295,17 @@ with st.sidebar:
             "nav-link": {
                 "font-size": "0.95rem",
                 "text-align": "left",
-                "margin": "2px 0",
-                "padding": "0.6rem 1rem",
-                "border-radius": "10px",
-                "color": "#8b95a5",
-                "--hover-color": "rgba(108, 92, 231, 0.1)",
+                "margin": "3px 0",
+                "padding": "0.65rem 1rem",
+                "border-radius": "12px",
+                "color": "#6b5545",
+                "--hover-color": "rgba(153, 27, 27, 0.1)",
             },
             "nav-link-selected": {
-                "background": "linear-gradient(135deg, #6c5ce7, #00cec9)",
-                "color": "#ffffff",
+                "background": "linear-gradient(135deg, #991b1b, #b91c1c)",
+                "color": "#f5c542",
                 "font-weight": "700",
+                "box-shadow": "0 4px 15px rgba(153, 27, 27, 0.3)",
             },
             "separator": {"margin": "0.5rem 0"},
         },
